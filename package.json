@@ -1,6 +1,6 @@
 {
   "name": "react-native-inback-timer-ios",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "react native timer that can run in iOS App background state",
   "main": "index.js",
   "scripts": {
