@@ -30,10 +30,6 @@ export default class Demos extends Component {
         this.state={
         };
         this.timerID = null;
-
-        setInterval(()=>{
-            console.log('我运行了');
-        }, 1000);
     }
     
     // 渲染组件
@@ -70,7 +66,7 @@ export default class Demos extends Component {
                     bgTimer.setInterval(()=>{
                         console.log('setInterval 滴滴');
                         this.setState({
-                            timerC: '滴滴'
+                            timerC: '滴滴',
                         });
                     },1000);
                 }}>

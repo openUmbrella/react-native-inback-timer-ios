@@ -67,7 +67,6 @@ class BgTimer {
         let timer = {};
         // 创建监听事件名
         timer.eventName = this.getEventName();
-        console.log('事件名:', timer.eventName);
         // 将listener加入到时钟信息对象里面
         timer.listener = Emitter.addListener(timer.eventName, (data) => {
             // 回到过来参数，是{remain: <剩余次数>}
@@ -136,7 +135,6 @@ class BgTimer {
         TimerPool.sort((a, b) => {
             return parseInt(a.eventName.substr(basicEventNameLen)) - parseInt(b.eventName.substr(basicEventNameLen));
         });
-        // console.log('当前的时钟池子：', [...TimerPool]);
         for (let i = 0; i < TimerPool.length; i++) {
             let num = parseInt(TimerPool[i].eventName.substr(basicEventNameLen));
             if (i === TimerPool.length - 1) {
