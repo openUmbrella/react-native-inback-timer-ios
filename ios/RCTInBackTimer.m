@@ -1,10 +1,9 @@
 //
-//  RCTInBackTimer.m
+//  RCTInBackTimer.h
 //  RCTInBackTimer
 //
 //  Created by jeff.Li on 2018/11/7.
 //  Copyright © 2018 jeff.Li. All rights reserved.
-//
 
 #import "RCTInBackTimer.h"
 
@@ -18,6 +17,8 @@ const NSInteger MAXTIMERCOUNT = 20;
 
 @property (nonatomic, assign) BOOL hasListeners;
 
+@property (nonatomic, assign) UIBackgroundTaskIdentifier taskId;
+
 
 @end
 
@@ -25,8 +26,9 @@ const NSInteger MAXTIMERCOUNT = 20;
 
 -(instancetype)init{
     if (self = [super init]) {
-        // 监听通知App进入后台的通知
+        // 监听通知App进入后台 前台的通知
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnterBackground:) name:@"UIApplicationDidEnterBackgroundNotification" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnterForeground:) name:@"UIApplicationWillEnterForegroundNotification" object:nil];
     }
     return self;
 }
@@ -34,14 +36,21 @@ const NSInteger MAXTIMERCOUNT = 20;
 -(void)dealloc{
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIApplicationDidEnterBackgroundNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIApplicationWillEnterForegroundNotification" object:nil];
 }
 
 -(void)appEnterBackground:(NSNotification *)notification{
     
-    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        // NSLog(@"我的剩余时间已经没有了");
+    __weak typeof(self) weakSelf = self;
+    self.taskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [[UIApplication sharedApplication] endBackgroundTask:self.taskId];
+        weakSelf.taskId = UIBackgroundTaskInvalid;
     }];
     
+}
+-(void)appEnterForeground:(NSNotification *)notification{
+    [[UIApplication sharedApplication] endBackgroundTask:self.taskId];
+    self.taskId = UIBackgroundTaskInvalid;
 }
 
 RCT_EXPORT_MODULE()
@@ -163,4 +172,3 @@ RCT_EXPORT_METHOD(clear:(NSString *)eventName){
 
 
 @end
-
