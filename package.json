@@ -1,0 +1,21 @@
+{
+  "name": "react-native-inback-timer-ios",
+  "version": "0.0.4",
+  "description": "react native timer that can run in iOS App background state",
+  "main": "index.js",
+  "scripts": {
+
+  },
+  "keywords": [
+    "react-native",
+    "timer",
+    "background timer",
+    "iOS"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openUmbrella/react-native-inback-timer-ios.git"
+  },
+  "author": "opu",
+  "license": "MIT"
+}
