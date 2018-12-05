@@ -20,7 +20,7 @@ import {
     Image
 } from 'react-native';
 
-import bgTimer from 'react-native-inback-timer-ios';
+import BGTimer from 'react-native-inback-timer-ios';
 
 export default class Demos extends Component {
 
@@ -39,57 +39,46 @@ export default class Demos extends Component {
                 <TouchableOpacity style={{ height: 30, backgroundColor: 'orange', marginTop: 20}} onPress={()=>{
                     
                     if(this.timerID == null){
-                        this.timerID = bgTimer.countdown(1000, 22, (data) => {
-                            console.log('啦啦啦:', data.remain);
+                        this.timerID = BGTimer.countdown(1000, 22, (data) => {
                             this.setState({
                                 timerA: data.remain
                             });
                         });
                     }else{
-                        bgTimer.clear(this.timerID);
+                        BGTimer.clear(this.timerID);
                         this.timerID = null;
                     }
                     
                 }}>
-                    <Text style={{}}>倒计时 时钟A: {this.state.timerA}</Text>
+                    <Text style={{}}>countdown timerA: {this.state.timerA}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ height: 30, backgroundColor: 'orange', marginTop: 20}} onPress={()=>{
-                    bgTimer.countdown(1000,10,(data) =>{
+                    BGTimer.countdown(1000,10,(data) =>{
                         this.setState({
                             timerB: data.remain
                         });
                     });
                 }}>
-                    <Text style={{}}>倒计时 时钟B: {this.state.timerB}</Text>
+                    <Text style={{}}>countdown timerB: {this.state.timerB}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{height: 30, backgroundColor: 'orange', marginTop: 20}} onPress={()=>{
-                    bgTimer.setInterval(()=>{
-                        console.log('setInterval 滴滴');
+                    BGTimer.setInterval(()=>{
+                        console.log('setInterval');
                         this.setState({
-                            timerC: '滴滴',
+                            timerC: this.state.timerC ?  null : 'didi',
                         });
                     },1000);
                 }}>
-                    <Text style={{}}> setInterval 时钟C: {this.state.timerC}</Text>
+                    <Text style={{}}> setInterval: {this.state.timerC}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ height: 30, backgroundColor: 'orange', marginTop: 20}} onPress={()=>{
-                    bgTimer.setTimeout((data)=>{
+                    let timerID = BGTimer.setTimeout((data)=>{
                         this.setState({
-                            timerD: '时间到啦！',
+                            timerD: 'lalala, timeout!',
                         });
-                    },2000);
+                    },9000);
                 }}>
-                    <Text style={{}}> setTimeout 时钟D: {this.state.timerD}</Text>
-                </TouchableOpacity>
-                
-                <TouchableOpacity style={{ height: 30, backgroundColor: 'orange', marginTop: 20}} onPress={()=>{
-                    bgTimer.countdown(1000,4, (data) =>{
-                        this.setState({
-                            timerE: data.remain
-                        });
-                    });
-                }}>
-                    <Text style={{}}>时钟E: {this.state.timerE}</Text>
+                    <Text style={{}}> setTimeout: {this.state.timerD}</Text>
                 </TouchableOpacity>
                 
             </View>

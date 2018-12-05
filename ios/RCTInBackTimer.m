@@ -26,7 +26,6 @@ const NSInteger MAXTIMERCOUNT = 20;
 
 -(instancetype)init{
     if (self = [super init]) {
-        // 监听通知App进入后台 前台的通知
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnterBackground:) name:@"UIApplicationDidEnterBackgroundNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnterForeground:) name:@"UIApplicationWillEnterForegroundNotification" object:nil];
     }
@@ -112,8 +111,6 @@ RCT_EXPORT_METHOD(timer:(NSString *)eventName
 
 -(void)sendCountDownEvent:(NSTimer *)timer{
     
-    NSLog(@"我们的时钟池:%@", self.timerPool);
-    
     for (NSMutableDictionary *timeDict in self.timerPool) {
         NSString *eventName = timeDict[@"eventName"];
         if ([eventName isEqualToString:timer.userInfo[@"eventName"]]) {
@@ -123,13 +120,11 @@ RCT_EXPORT_METHOD(timer:(NSString *)eventName
                 [self.timerPool removeObject:timeDict];
                 break;
             }else{
-                // 如果桥接还存在的话, 就向js端发送事件
                 if (self.bridge != nil && self.hasListeners) {
                     --remainCount;
                     [self sendEventWithName:timer.userInfo[@"eventName"] body:@{@"remain": @(remainCount)}];
                     timeDict[@"remainCount"] = @(remainCount);
                 }else{
-                    // 清空所有的时钟
                     for (NSDictionary *timeDict in self.timerPool) {
                         NSTimer *timer = timeDict[@"timer"];
                         [timer invalidate];
@@ -151,17 +146,12 @@ RCT_EXPORT_METHOD(clear:(NSString *)eventName){
     for (NSMutableDictionary *timerDic in self.timerPool) {
         NSString * timerEventName = timerDic[@"eventName"];
         if ([timerEventName isEqualToString: eventName]) {
-            // 将时钟停止
             [(NSTimer *)timerDic[@"timer"] invalidate];
-            // 将这个时钟信息从时钟池中删除
             [self.timerPool removeObject:timerDic];
             break;
         }
     }
 }
-
-
-#pragma mark - 懒加载
 
 -(NSMutableArray *)timerPool{
     if (_timerPool == nil) {
