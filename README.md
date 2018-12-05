@@ -8,6 +8,8 @@ npm install --save react-native-inback-timer-ios
 ### ScreenShoot
 ![screen-shoot](https://github.com/openUmbrella/react-native-inback-timer-ios/blob/master/example/images/screenshoot.gif?raw=true)
 
+#### [如果你恰好再天朝,请点击这里](https://www.jianshu.com/p/9cc582cba9d4)
+
 ### Features
 1. it's a timer can run in background state
 2. support ios only
