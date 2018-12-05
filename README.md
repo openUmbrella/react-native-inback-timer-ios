@@ -5,6 +5,7 @@ the react native timer that can run in iOS app background state
 ```
 npm install --save react-native-inback-timer-ios
 ```
+### ScreenShoot
 ![screen-shoot](https://github.com/openUmbrella/react-native-inback-timer-ios/blob/master/example/images/screenshoot.gif?raw=true)
 
 ### Features
